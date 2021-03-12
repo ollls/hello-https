@@ -15,10 +15,17 @@ import zhttp.Method._
 
 object ServerExample extends zio.App {
 
+
+  object param1 extends QueryParam("param1")
+
   def run(args: List[String]) = {
 
 
     val r =  HttpRoutes.of {
+
+       case GET ->  Root / "user" :? param1( par ) =>
+        ZIO( Response.Ok  ) 
+
        case GET -> Root / "health" =>
         ZIO(Response.Ok.asTextBody("Health Check Ok"))
     }
